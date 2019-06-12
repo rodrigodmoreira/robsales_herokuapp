@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
 module.exports = (pool) => ({
-  findAll: ({ where }) => pool.query('select * from users order by id asc')
+  findAll: () => pool.query('select * from users order by id asc')
     .then(res => res.rows)
     .catch(err => { throw err }),
   
