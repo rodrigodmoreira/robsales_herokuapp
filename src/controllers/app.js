@@ -1,5 +1,6 @@
 const db = require('../models')
 const _ = require('lodash')
+const Services = require('../services')
 
 module.exports = {
   // Exemplos
@@ -8,30 +9,30 @@ module.exports = {
   },
   
   listUsers: async (req, res) => {
-    const users = await db.User.findAll()
-    return res.status(200).json({ data: users })
+    try {
+      const sres = await db.User.findAll()
+      return res.status(200).json(sres)
+    } catch (err) {
+      return err
+    }
   },
 
   findUser: async (req, res) => {
-    const user = await db.User.findById(req.params.id)
-
-    if (_.isNil(user)) {
-      return res.status(404).json({ info: 'user_not_found' })
-    } else {
-      return res.status(200).json({ data: user })
+    try {
+      const sres = await Services.User.findUser(req.params.id)
+      return res.status(200).json(sres)
+    } catch (err) {
+      return err
     }
   },
 
   // Caso de uso login
   login: async (req, res) => {
-    if (_.isNil(req.body.username) || _.isNil(req.body.username)) return res.status(400).json({ info: 'blank_username_or_password' })
-
-    const user = await await db.User.findUserWithPwd(req.body.username, req.body.password)
-
-    if (_.isNil(user)) {
-      return res.status(404).json({ info: 'wrong_username_or_password' })
-    } else {
-      return res.status(200).json({ token: Buffer.from('loggedToken').toString('base64') })
+    try {
+      const sres = await Services.User.login(req.body.username, req.body.password)
+      return res.status(200).json(sres)
+    } catch (err) {
+      return err
     }
   }
 }

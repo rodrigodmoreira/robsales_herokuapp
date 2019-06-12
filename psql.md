@@ -1,11 +1,4 @@
-# Preparando DB
-create role admin with login password '@cmpf';
-create database robsales;
-
-# Acesso pelo terminal
-psql robsales -U admin -W;
-
-# Tabela teste - Users
+# Script teste - Users
 create table users (
   id serial primary key,
   username varchar(30) unique,
