@@ -1,5 +1,3 @@
-const db = require('../models')
-const _ = require('lodash')
 const Services = require('../services')
 
 module.exports = {
@@ -7,32 +5,20 @@ module.exports = {
   defaultMessage: (req, res) => {
     return res.status(200).json({ info: 'Robsales API' })
   },
-  
+
   listUsers: async (req, res) => {
-    try {
-      const sres = await db.User.findAll()
-      return res.status(200).json(sres)
-    } catch (err) {
-      return err
-    }
+    const sres = await Services.User.listUsers(res)
+    return sres
   },
 
   findUser: async (req, res) => {
-    try {
-      const sres = await Services.User.findUser(req.params.id)
-      return res.status(200).json(sres)
-    } catch (err) {
-      return err
-    }
+    const sres = await Services.User.findUser(req.params.id, res)
+    return sres
   },
 
   // Caso de uso login
   login: async (req, res) => {
-    try {
-      const sres = await Services.User.login(req.body.username, req.body.password)
-      return res.status(200).json(sres)
-    } catch (err) {
-      return err
-    }
+    const sres = await Services.User.login(req.body.username, req.body.password, res)
+    return sres
   }
 }

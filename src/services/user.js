@@ -1,34 +1,33 @@
 const db = require('../models')
 const _ = require('lodash')
-const Boom = require('boom')
 
 module.exports = {
   // Exemplos
-  listUsers: async () => {
+  listUsers: async (res) => {
     const users = await db.User.findAll()
-    return { data: users }
+    return res.status(200).json({ data: users })
   },
 
-  findUser: async (userId) => {
+  findUser: async (userId, res) => {
     const user = await db.User.findById(userId)
 
     if (_.isNil(user)) {
-      throw Boom.notFound('user_not_found')
+      return res.boom.notFound('user_not_found')
     } else {
-      return { data: user }
+      return res.status(200).json({ data: user })
     }
   },
 
   // Caso de uso login
-  login: async (username, password) => {
-    if (_.isNil(username) || _.isNil(username)) throw Boom.badRequest({ info: 'blank_username_or_password' })
+  login: async (username, password, res) => {
+    if (_.isNil(username) || _.isNil(password)) return res.boom.badRequest({ info: 'blank_username_or_password' })
 
     const user = await await db.User.findUserWithPwd(username, password)
 
     if (_.isNil(user)) {
-      throw Boom.unauthorized('wrong_username_or_password')
+      return res.boom.unauthorized('wrong_username_or_password')
     } else {
-      return { token: Buffer.from('loggedToken').toString('base64') }
+      return res.status(200).json({ token: Buffer.from('loggedToken').toString('base64') })
     }
   }
 }
