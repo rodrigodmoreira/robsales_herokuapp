@@ -1,5 +1,5 @@
-pool = require('../db')
+pool = require('../db_connection')
 
 module.exports = {
-  User: require('./user')(pool)
+  Usuario: require('./usuario')(pool)
 }
