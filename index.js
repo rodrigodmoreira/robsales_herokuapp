@@ -21,6 +21,15 @@ app.use(cors())
 // Routes
 require('./api/routes')(app)
 
+// React App
+// Serve static files from the React frontend app
+app.use(express.static('./client/build'))
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile('./client/build/index.html')
+})
+
 // Start server on port
 app.listen(port, () => {
   if (process.env.NODE_ENV !== 'production')
