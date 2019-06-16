@@ -27,7 +27,7 @@ const LoginBox = props => (
       <Text color='#764C24' fontWeight='bold'>Mapeando o doce caseiro mais perto de você!</Text>
       <Input placeholder='Username' onChange={props.onUsernameChange} />
       <Input placeholder='Password' onChange={props.onPasswordChange} />
-      <Button variant='contained' color='primary' onClick={props.onLoginClick} ><Text fontWeight='bold'>LOGIN</Text></Button>
+      <Button variant='contained' color='primary' onClick={props.onLoginClick} >LOGIN</Button>
     </Wrapper>
   </Paper>
 )
