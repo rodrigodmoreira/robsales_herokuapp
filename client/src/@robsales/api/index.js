@@ -1,6 +1,6 @@
 import apisauce from 'apisauce'
 
-const baseURL = process.env.DOT_ENV === 'production'
+const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://robsales.herokuapp.com/api'
   : 'http://localhost:3000/api'
 
