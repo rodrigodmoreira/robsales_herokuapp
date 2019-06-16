@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const cors = require('cors')
+const path = require('path')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -22,13 +23,16 @@ app.use(cors())
 require('./api/routes')(app)
 
 // React App
+const opt = { root: __dirname }
 // Serve static files from the React frontend app
-app.use(express.static('./client/build'))
+app.use(express.static('client/build', opt))
 
 // Anything that doesn't match the above, send back index.html
 app.get('*', (req, res) => {
-  res.sendFile('./client/build/index.html')
+  res.sendFile('client/build/index.html', opt)
 })
+
+// Path join _dirname is necessary
 
 // Start server on port
 app.listen(port, () => {
