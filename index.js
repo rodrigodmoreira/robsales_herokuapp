@@ -1,13 +1,23 @@
+const dotenv = require('dotenv')
+dotenv.config()
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const cors = require('cors')
-const path = require('path')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-// Middleware
+const auth = require('./api/utils/auth')
+
+// Middlewares
+// Authentication
+app.use(
+  auth.tokenValidator({ unless: ['/', '/api/login', '/static/*'] })
+)
+
+// Request parsers
 app.use(bodyParser.json())        // corpo JSON
 app.use(bodyParser.urlencoded({   // attr URI
   extended: true
@@ -32,7 +42,7 @@ app.get('*', (req, res) => {
   res.sendFile('client/build/index.html', opt)
 })
 
-// Path join _dirname is necessary
+// _dirname is necessary for express res.sendFile
 
 // Start server on port
 app.listen(port, () => {

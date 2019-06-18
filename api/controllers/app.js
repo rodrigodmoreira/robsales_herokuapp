@@ -1,4 +1,5 @@
 const db = require('../models')
+const jwt = require('jsonwebtoken')
 const _ = require('lodash')
 
 module.exports = {
@@ -23,7 +24,7 @@ module.exports = {
     if (_.isNil(usuario)) {
       return res.boom.unauthorized('wrong_username_or_password')
     } else {
-      return res.status(200).json({ token: Buffer.from('loggedToken').toString('base64') })
+      return res.status(200).json({ token: jwt.sign({ username: req.body.username }, process.env.SECRET_KEY) })
     }
   }
 }

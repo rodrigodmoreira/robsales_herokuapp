@@ -22,7 +22,7 @@ const api = {
       localStorage.setItem('token', res.token)
       apiS.setHeaders({
         'Content-Type': 'application/json',
-        'Authorization': res.token
+        'Authorization': `Bearer ${res.token}`
       })
     } else {
       localStorage.removeItem('token')
