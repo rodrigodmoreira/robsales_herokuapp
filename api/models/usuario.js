@@ -14,10 +14,13 @@ module.exports = (pool) => ({
     .catch(err => { throw err }),
   
   bulkCreate: (usuarios) => {
+    let res = []
+    let createdUser
     usuarios.forEach(usuario => {
-      let createdUser = pool.query('insert into usuario (cpf, username, password, name, reputacao) values ($1,$2,$3,$4,$5)',[usuario.cpf, usuario.username, usuario.password, usuario.name, 0])
-        .then(res => console.log(res))
-        .catch(err => err)
+      createdUser = pool.query('insert into usuario (cpf, username, password, nome, reputacao) values ($1,$2,$3,$4,$5)',[usuario.cpf, usuario.username, usuario.password, usuario.nome, 5])
+        .then(qres => res.push(qres))
+        .catch(err => { throw err })
     })
+    return res
   }
 })

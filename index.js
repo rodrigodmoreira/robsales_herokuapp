@@ -14,7 +14,7 @@ const auth = require('./api/utils/auth')
 // Middlewares
 // Authentication
 app.use(
-  auth.tokenValidator({ unless: ['/', '/api/login', '/static/*'] })
+  auth.tokenValidator({ unless: ['/', '/api/login', '/api/signup', '/static/*'] })
 )
 
 // Request parsers

@@ -26,5 +26,19 @@ module.exports = {
     } else {
       return res.status(200).json({ token: jwt.sign({ username: req.body.username }, process.env.SECRET_KEY) })
     }
+  },
+
+  signup: async (req, res) => {
+    const [username, password, cpf, name] = [req.body.username, req.body.password, req.body.cpf, req.body.name]
+
+    console.log(username, password, cpf, name)
+    if (_.isNil(username) || _.isNil(password) || _.isNil(cpf) || _.isNil(name)) return res.boom.badRequest('blank_fields')
+
+    try {
+      const result = await db.Usuario.bulkCreate([{ username, password, cpf, nome: name }])
+      return res.status(200).json(result)
+    } catch (err) {
+      return res.boom.forbidden('username_or_cpf_already_registered')
+    }
   }
 }

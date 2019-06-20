@@ -14,6 +14,7 @@ const LoginView = props => (
       onUsernameChange={props.onUsernameChange}
       onPasswordChange={props.onPasswordChange}
       onLoginClick={props.onLoginClick}
+      onSignUpClick={props.onSignUpClick}
     />
   </Background>
 )

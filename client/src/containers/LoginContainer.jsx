@@ -20,6 +20,9 @@ const LoginContainer = props => {
       props.history.push('/menu')
     }
   }
+  const onSignUpClick = async (event) => {
+    props.history.push('/signup')
+  }
 
   return (
     <LoginView
@@ -27,6 +30,7 @@ const LoginContainer = props => {
       onUsernameChange={onUsernameChange}
       onPasswordChange={onPasswordChange}
       onLoginClick={onLoginClick}
+      onSignUpClick={onSignUpClick}
     />
   )
 }
