@@ -16,13 +16,13 @@ module.exports = {
         }
       })
     }
-    if (publicRoute) next()
+    if (publicRoute) return next()
 
     // Split Bearer from token
-    if (_.isNil(req.headers.authorization) && _.isNil(req.query.token)) return res.status(401).send('invalid_token')
+    if (_.isNil(req.headers.authorization) && _.isNil(req.query.token)) return res.status(401).send('blank_token')
     
     let tokens = _.split(req.headers.authorization, ' ')
-    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && _.isNil(req.query.token)) return res.status(401).send('invalid_token')
+    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && _.isNil(req.query.token)) return res.status(401).send('invalid_auth_token')
 
     // Try to parse
     let auth
@@ -44,6 +44,6 @@ module.exports = {
     if (_.isNil(auth)) return res.status(401).send('invalid_token')
 
     req.headers.authorization = auth
-    next()
+    return next()
   }
 }
