@@ -14,10 +14,17 @@ const LoginContainer = props => {
     setLogin('password')(event.target.value)
   }
   const onLoginClick = async (event) => {
-    const { ok } = await api.login(login.username, login.password)
+    const res = await api.post('/login', { username: login.username, password: login.password })
 
-    if (ok) {
-      props.history.push('/menu')
+    if (res.ok) {
+      localStorage.setItem('token', res.data.token)
+      api.setHeader('Authorization', `Bearer ${res.data.token}`)
+      api.get('/listProducts') // teste
+
+      props.history.push('/products')
+    } else {
+      localStorage.setItem('token', null)
+      api.setHeader('Authorization', `Bearer ${null}`)
     }
   }
   const onSignUpClick = async (event) => {

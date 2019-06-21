@@ -3,6 +3,7 @@ const _ = require('lodash')
 
 module.exports = {
   tokenValidator: (options) => (req, res, next) => {
+    console.log(req)
     // Check if req is on a public route
     let publicRoute = false
     if (!_.isNil(options)) {
@@ -19,7 +20,7 @@ module.exports = {
 
     // Split Bearer from token
     let tokens = _.split(req.headers.authorization, ' ')
-    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && !publicRoute) return res.status(401).send('invalid_username_or_password')
+    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && !publicRoute) return res.status(401).send('invalid_token')
 
     // Try to parse
     let auth
@@ -29,7 +30,7 @@ module.exports = {
       auth = null
     }
     
-    if (_.isNil(auth) && !publicRoute) return res.status(401).send('invalid_username_or_password')
+    if (_.isNil(auth) && !publicRoute) return res.status(401).send('invalid_token')
 
     req.headers.authorization = auth
     next()

@@ -8,12 +8,6 @@ module.exports = {
     return res.status(200).json({ info: 'Robsales API' })
   },
 
-  listUsuarios: async (req, res) => {
-    const usuarios = await db.Usuario.findAll()
-    return res.status(200).json({ data: usuarios })
-  },
-
-  // Caso de uso login
   login: async (req, res) => {
     const [username, password] = [req.body.username, req.body.password]
 
@@ -31,7 +25,6 @@ module.exports = {
   signup: async (req, res) => {
     const [username, password, cpf, name] = [req.body.username, req.body.password, req.body.cpf, req.body.name]
 
-    console.log(username, password, cpf, name)
     if (_.isNil(username) || _.isNil(password) || _.isNil(cpf) || _.isNil(name)) return res.boom.badRequest('blank_fields')
 
     try {
@@ -39,6 +32,15 @@ module.exports = {
       return res.status(200).json(result)
     } catch (err) {
       return res.boom.forbidden('username_or_cpf_already_registered')
+    }
+  },
+
+  listProducts: async (req, res) => {
+    try {
+      const result = await db.Doce.findAll()
+      return res.status(200).json(result)
+    } catch (err) {
+      return res.boom.internal('sorry_i_fcked_up')
     }
   }
 }
