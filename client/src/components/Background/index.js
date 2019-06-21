@@ -25,6 +25,9 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
+  position: fixed;
+  overflow-y: scroll;
+
   background-image: url(${BackgroundImage});
   background-repeat: no-repeat;
   background-size: cover;

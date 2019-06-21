@@ -1,15 +1,11 @@
 import * as React from 'react'
 
 import Background from '../components/Background'
-import ProductCard from '../components/ProductCard'
+import ProductList from '../components/ProductList'
 
 const ProductListView = props => (
   <Background>
-    {
-      props.products.forEach(prod =>(
-        <ProductCard />
-      ))
-    }
+    <ProductList products={props.products} />
   </Background>
 )
 

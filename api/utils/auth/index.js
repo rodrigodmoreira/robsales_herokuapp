@@ -3,7 +3,6 @@ const _ = require('lodash')
 
 module.exports = {
   tokenValidator: (options) => (req, res, next) => {
-    console.log(req)
     // Check if req is on a public route
     let publicRoute = false
     if (!_.isNil(options)) {
@@ -17,10 +16,13 @@ module.exports = {
         }
       })
     }
+    if (publicRoute) next()
 
     // Split Bearer from token
+    if (_.isNil(req.headers.authorization) && _.isNil(req.query.token)) return res.status(401).send('invalid_token')
+    
     let tokens = _.split(req.headers.authorization, ' ')
-    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && !publicRoute) return res.status(401).send('invalid_token')
+    if (tokens.length !== 2 && tokens[0] !== 'Bearer' && _.isNil(req.query.token)) return res.status(401).send('invalid_token')
 
     // Try to parse
     let auth
@@ -29,8 +31,17 @@ module.exports = {
     } catch (err) {
       auth = null
     }
+    // Optional parse with token from query
+    if (auth !== true && !_.isNil(req.query.token)) {
+      try {
+        auth = jwt.verify(req.query.token, process.env.SECRET_KEY)
+      } catch (err) {
+        auth = null
+      }
+    }
+    console.log(auth)
     
-    if (_.isNil(auth) && !publicRoute) return res.status(401).send('invalid_token')
+    if (_.isNil(auth)) return res.status(401).send('invalid_token')
 
     req.headers.authorization = auth
     next()

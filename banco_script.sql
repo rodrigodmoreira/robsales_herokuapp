@@ -175,6 +175,8 @@ UPDATE vendedor SET isvendedor = true WHERE cpf_usuario = '000.000.000-00';
 
 INSERT INTO doce(nome, descricao, valor, idvendedor_vendedor) VALUES('Bombom de chocolate', 'Melhor bombom do CEFET-MG', 2, 1);
 INSERT INTO doce(nome, descricao, valor, idvendedor_vendedor) VALUES('Bombom de creme', 'Segundo Melhor bombom do CEFET-MG', 2, 1);
+INSERT INTO doce(nome, descricao, valor, idvendedor_vendedor) VALUES('Bombom de negresco', 'Terceiro Melhor bombom do CEFET-MG', 2, 1);
+INSERT INTO doce(nome, descricao, valor, idvendedor_vendedor) VALUES('Bombom de maracujá', 'Quarto Melhor bombom do CEFET-MG', 2, 1);
 
 INSERT INTO cliente(cpf_usuario) VALUES('000.000.000-01');
 INSERT INTO cliente(cpf_usuario) VALUES('000.000.000-02');

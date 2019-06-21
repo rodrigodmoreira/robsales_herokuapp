@@ -18,8 +18,7 @@ const LoginContainer = props => {
 
     if (res.ok) {
       localStorage.setItem('token', res.data.token)
-      api.setHeader('Authorization', `Bearer ${res.data.token}`)
-      api.get('/listProducts') // teste
+      api.setHeaders({'Authorization': res.data.token})
 
       props.history.push('/products')
     } else {

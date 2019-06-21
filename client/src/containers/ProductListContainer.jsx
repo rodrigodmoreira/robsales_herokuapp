@@ -10,8 +10,7 @@ const ProductListContainer = props => {
     let canceled = false
 
     async function fetchData () {
-      api.setHeader('Authorization', `Bearer ${localStorage.getItem('token')}`)
-      const res = await api.get('/listProducts').then(res => res.data)
+      const res = await api.get('/listProducts', { token: localStorage.getItem('token') })
       if (res && res.ok && !canceled) setProducts (res.data)
     }
     fetchData()
